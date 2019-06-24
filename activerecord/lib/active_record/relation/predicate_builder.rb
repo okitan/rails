@@ -103,7 +103,7 @@ module ActiveRecord
               end
             else
               queries = values.map do |object|
-                mapping.map do |field_attr, aggregate_attr|
+                mapping.flat_map do |field_attr, aggregate_attr|
                   if table.has_column?(field_attr)
                     build(table.arel_attribute(field_attr), object.try!(aggregate_attr))
                   else
