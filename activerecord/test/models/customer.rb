@@ -3,6 +3,10 @@
 class Customer < ActiveRecord::Base
   cattr_accessor :gps_conversion_was_run
 
+  has_many :receipts
+
+  composed_of :invoice, mapping: [ %w(receipts.id id) ]
+
   composed_of :address, mapping: [ %w(address_street street), %w(address_city city), %w(address_country country) ], allow_nil: true
   composed_of :balance, class_name: "Money", mapping: %w(balance amount)
   composed_of :gps_location, allow_nil: true
@@ -82,4 +86,12 @@ class Fullname
   def to_s
     "#{first} #{last.upcase}"
   end
+end
+
+class Receipt < ActiveRecord::Base
+  belongs_to :customer
+end
+
+class Invoice
+  attr_accessor :id
 end

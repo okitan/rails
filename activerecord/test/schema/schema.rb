@@ -728,6 +728,11 @@ ActiveRecord::Schema.define do
     t.integer :tags_with_nullify_count, default: 0
   end
 
+  create_table :receipts, force: true do |t|
+    t.references :customer
+    t.string :title, null: false
+  end
+
   create_table :serialized_posts, force: true do |t|
     t.integer :author_id
     t.string :title, null: false
